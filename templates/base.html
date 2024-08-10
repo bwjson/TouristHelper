@@ -5,18 +5,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Weather Website{% endblock %}</title>
+    <title>{{ title }}</title>
     <link rel="stylesheet" href="{% static 'deps/style.css' %}">
 </head>
 <body>
+
+{% if messages %}
+    <div id="popup-messages">
+        {% for message in messages %}
+            <div class="message-popup {% if message.tags %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
     <header>
         <div class="container">
-            <h1><a href="#">Weather Site</a></h1>
+            <h1><a href="{% url 'user:login' %}">Weather Site</a></h1>
             <nav>
                 <ul>
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">Login</a></li>
                     <li><a href="#">About Us</a></li>
+                    <li><a href="#">Profile</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                        <li>{{ user.username }} | <a href='{% url 'user:logout' %}'>Logout</a></li>
+                    {% else %}
+                        <li><a href='{% url 'user:login' %}'>Login</a> | <a href='{% url 'user:register' %}'>Registration</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>
@@ -31,5 +48,10 @@
     <footer>
         <p>&copy; 2024 Weather Site. All rights reserved.</p>
     </footer>
+
+
+
+<script src="{% static 'deps/js.js' %}"></script>
+
 </body>
 </html>
