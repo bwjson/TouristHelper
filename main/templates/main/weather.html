@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Погода</title>
+    <link rel="stylesheet" href="{% static 'deps/weather.css' %}">
+</head>
+<body>
+    <div class="search-container">
+        <form role="search" method="get" action="{% url 'main:search' %}">
+            <input type="search" class="form-control me-2" aria-label="Search" name="city" placeholder="Enter city name...">
+            <button class="search-button" type="submit">Search</button>
+        </form>
+        <div class="date-buttons">
+            <button class="date-button"><a href="{% url 'main:weather' date='today' %}" class="date-button">Today</a></button>
+            <button class="date-button"><a href="#">Tomorrow</a></button>
+            <button class="date-button"><a href="#">3 Days</a></button>
+            <button class="date-button"><a href="#">5 Days</a></button>
+        </div>
+    </div>
+    <div class="weather-container">
+        <div class="weather-box">
+            <div class="temperature">Today</div>
+            {% if weather.current.weather == 'Rain' %}
+                <img src="{% static "deps/rain.png" %}" alt="Weather" class="weather-icon">
+            {% elif weather.current.weather == 'Clouds' %}
+                <img src="{% static "deps/cloud.png" %}" alt="Weather" class="weather-icon">
+            {% elif weather.current.weather == 'Clear' %}
+                <img src="{% static "deps/sunny.png" %}" alt="Weather" class="weather-icon">
+            {% endif %}
+            <div class="temperature">{{ weather.current.temp }}°C</div>
+            <div class="status">{{ weather.current.weather }}</div>
+            <div class="wind-speed">Wind: {{ weather.current.wind_speed }} m/s</div>
+            <div class="humidity">Humidity: {{ weather.current.humidity }}%</div>
+        </div>
+        <div class="weather-box">
+            <div class="temperature">Tomorrow</div>
+            {% if weather.tomorrow.weather == 'Rain' %}
+                <img src="{% static "deps/rain.png" %}" alt="Weather" class="weather-icon">
+            {% elif weather.tomorrow.weather == 'Clouds' %}
+                <img src="{% static "deps/cloud.png" %}" alt="Weather" class="weather-icon">
+            {% elif weather.tomorrow.weather == 'Clear' %}
+                <img src="{% static "deps/sunny.png" %}" alt="Weather" class="weather-icon">
+            {% endif %}
+            <div class="temperature">{{ weather.tomorrow.temp }}°C</div>
+            <div class="status">{{ weather.tomorrow.weather }}</div>
+            <div class="wind-speed">Wind: {{ weather.tomorrow.wind_speed }} m/s</div>
+            <div class="humidity">Humidity: {{ weather.tomorrow.humidity }}%</div>
+        </div>
+        <div class="weather-box">
+            <div class="temperature">Day after</div>
+            {% if weather.day_after.weather == 'Rain' %}
+                <img src="{% static "deps/rain.png" %}" alt="Weather" class="weather-icon">
+            {% elif weather.day_after.weather == 'Clouds' %}
+                <img src="{% static "deps/cloud.png" %}" alt="Weather" class="weather-icon">
+            {% elif weather.day_after.weather == 'Clear' %}
+                <img src="{% static "deps/sunny.png" %}" alt="Weather" class="weather-icon">
+            {% endif %}
+            <div class="temperature">{{ weather.day_after.temp }}°C</div>
+            <div class="status">{{ weather.day_after.weather }}</div>
+            <div class="wind-speed">Wind: {{ weather.day_after.wind_speed }} m/s</div>
+            <div class="humidity">Humidity: {{ weather.day_after.humidity }}%</div>
+        </div>
+    </div>
+
+</body>
+</html>
+{% endblock %}
