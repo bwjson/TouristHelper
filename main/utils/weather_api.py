@@ -71,6 +71,3 @@ class Weather_API:
     def __str__(self):
         return f'Temperature: {self.temp}°C, Weather: {self.weather}, Wind Speed: {self.wind_speed} m/s, Humidity: {self.humidity}%'
 
-
-a = Weather_API.get_city_weather_data('Astana')
-print(a)

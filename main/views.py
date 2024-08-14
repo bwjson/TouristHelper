@@ -6,32 +6,58 @@ class WeatherView(TemplateView):
     template_name = 'main/weather.html'
 
     def get_context_data(self, **kwargs):
-        # date = self.request.GET.get('date', None)
+        search_city = self.request.GET.get('city', 'Tokyo')
+        date = self.request.GET.get('date', '3_days')
 
-        search_city = self.request.GET.get('city', None)
-
-        if search_city is None:
-            current_data = w.Weather_API.get_weather_data(53.2194, 63.6354, index=0)
-            tomorrow_data = w.Weather_API.get_weather_data(53.2194, 63.6354, index=8)
-            day_after_data = w.Weather_API.get_weather_data(53.2194, 63.6354, index=16)
-
-            current = w.Weather_API(**current_data)
-            tomorrow = w.Weather_API(**tomorrow_data)
-            day_after = w.Weather_API(**day_after_data)
+        if date == 'today':
+            first_data = w.Weather_API.get_city_weather_data(search_city, index=0)
+            second_data = w.Weather_API.get_city_weather_data(search_city, index=2)
+            third_data = w.Weather_API.get_city_weather_data(search_city, index=4)
+            fourth_data = None
+            fifth_data = None
+        elif date == 'tomorrow':
+            first_data = w.Weather_API.get_city_weather_data(search_city, index=8)
+            second_data = w.Weather_API.get_city_weather_data(search_city, index=10)
+            third_data = w.Weather_API.get_city_weather_data(search_city, index=12)
+            fourth_data = None
+            fifth_data = None
+        elif date == '5_days':
+            first_data = w.Weather_API.get_city_weather_data(search_city, index=0)
+            second_data = w.Weather_API.get_city_weather_data(search_city, index=8)
+            third_data = w.Weather_API.get_city_weather_data(search_city, index=16)
+            fourth_data = w.Weather_API.get_city_weather_data(search_city, index=24)
+            fifth_data = w.Weather_API.get_city_weather_data(search_city, index=32)
         else:
-            search_city_data_c = w.Weather_API.get_city_weather_data(search_city, index=0)
-            search_city_data_t = w.Weather_API.get_city_weather_data(search_city, index=8)
-            search_city_data_d = w.Weather_API.get_city_weather_data(search_city, index=16)
-            current = w.Weather_API(**search_city_data_c)
-            tomorrow = w.Weather_API(**search_city_data_t)
-            day_after = w.Weather_API(**search_city_data_d)
+            first_data = w.Weather_API.get_city_weather_data(search_city, index=0)
+            second_data = w.Weather_API.get_city_weather_data(search_city, index=8)
+            third_data = w.Weather_API.get_city_weather_data(search_city, index=16)
+            fourth_data = None
+            fifth_data = None
+
+        first = w.Weather_API(**first_data)
+        second = w.Weather_API(**second_data)
+        third = w.Weather_API(**third_data)
+
+        if date == '5_days':
+            fourth = w.Weather_API(**fourth_data)
+            fifth = w.Weather_API(**fifth_data)
+
+        if first_data == 'City not found' or first_data is None:
+            context = super().get_context_data(**kwargs)
+            context['error'] = 'City not found'
+            return context
+
+        print(date)
 
         context = super().get_context_data(**kwargs)
         context['title'] = 'Weather'
         context['weather'] = {
-            'current': current,
-            'tomorrow': tomorrow,
-            'day_after': day_after,
+            'first': first,
+            'second': second,
+            'third': third,
+            'fourth': fourth if date == '5_days' else None,
+            'fifth': fifth if date == '5_days' else None,
+            'date': date
         }
         return context
 
