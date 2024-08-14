@@ -17,16 +17,20 @@
             <button class="search-button" type="submit">Search</button>
         </form>
         <div class="date-buttons">
-            <button class="date-button {% if weather.date == 'today' %}active-date-button{% endif %}" onclick="document.getElementById('date-input').value = 'today'; document.getElementById('weather-form').submit();">
+            <button class="date-button {% if weather.date == 'today' %}active-date-button{% endif %}"
+                    onclick="document.getElementById('date-input').value = 'today'; document.getElementById('weather-form').submit();">
                 Today
             </button>
-            <button class="date-button {% if weather.date == 'tomorrow' %}active-date-button{% endif %}" onclick="document.getElementById('date-input').value = 'tomorrow'; document.getElementById('weather-form').submit();">
+            <button class="date-button {% if weather.date == 'tomorrow' %}active-date-button{% endif %}"
+                    onclick="document.getElementById('date-input').value = 'tomorrow'; document.getElementById('weather-form').submit();">
                 Tomorrow
             </button>
-            <button class="date-button {% if weather.date == '3_days' %}active-date-button{% endif %}" onclick="document.getElementById('date-input').value = '3_days'; document.getElementById('weather-form').submit();">
+            <button class="date-button {% if weather.date == '3_days' %}active-date-button{% endif %}"
+                    onclick="document.getElementById('date-input').value = '3_days'; document.getElementById('weather-form').submit();">
                 3 Days
             </button>
-            <button class="date-button {% if weather.date == '5_days' %}active-date-button{% endif %}" onclick="document.getElementById('date-input').value = '5_days'; document.getElementById('weather-form').submit();">
+            <button class="date-button {% if weather.date == '5_days' %}active-date-button{% endif %}"
+                    onclick="document.getElementById('date-input').value = '5_days'; document.getElementById('weather-form').submit();">
                 5 Days
             </button>
         </div>
@@ -40,7 +44,7 @@
         <div class="weather-container">
 
             <div class="weather-box">
-                <div class="temperature">Today</div>
+                <div class="temperature">{{ weather.first.header }}</div>
                 {% if weather.first.weather == 'Rain' %}
                     <img src="{% static "deps/rain.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.first.weather == 'Clouds' %}
@@ -55,7 +59,7 @@
             </div>
 
             <div class="weather-box">
-                <div class="temperature">Tomorrow</div>
+                <div class="temperature">{{ weather.second.header }}</div>
                 {% if weather.second.weather == 'Rain' %}
                     <img src="{% static "deps/rain.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.second.weather == 'Clouds' %}
@@ -70,7 +74,7 @@
             </div>
 
             <div class="weather-box">
-                <div class="temperature">Day after</div>
+                <div class="temperature">{{ weather.third.header }}</div>
                 {% if weather.third.weather == 'Rain' %}
                     <img src="{% static "deps/rain.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.third.weather == 'Clouds' %}
@@ -86,7 +90,7 @@
 
         {% if weather.date == '5_days' %}
         	<div class="weather-box">
-                <div class="temperature">Day after</div>
+                <div class="temperature">{{ weather.fourth.header }}</div>
                 {% if weather.fourth.weather == 'Rain' %}
                     <img src="{% static "deps/rain.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.fourth.weather == 'Clouds' %}
@@ -101,7 +105,7 @@
             </div>
 
             <div class="weather-box">
-                <div class="temperature">Day after</div>
+                <div class="temperature">{{ weather.fifth.header }}</div>
                 {% if weather.fifth.weather == 'Rain' %}
                     <img src="{% static "deps/rain.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.fifth.weather == 'Clouds' %}

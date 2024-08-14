@@ -4,11 +4,12 @@ import json
 API_KEY = '4fb58853c7917f3aa844a78cd28a80aa'
 
 class Weather_API:
-    def __init__(self, temp, weather, wind_speed, humidity):
+    def __init__(self, temp, weather, wind_speed, humidity, header):
         self.temp = temp
         self.weather = weather
         self.wind_speed = wind_speed
         self.humidity = humidity
+        self.header = header
 
     @staticmethod
     def get_weather_data(lat, lon, units='metric', index=0):
@@ -28,7 +29,7 @@ class Weather_API:
                 'temp': round(data['list'][index]['main']['temp']),
                 'weather': data['list'][index]['weather'][0]['main'],
                 'wind_speed': data['list'][index]['wind']['speed'],
-                'humidity': data['list'][index]['main']['humidity']
+                'humidity': data['list'][index]['main']['humidity'],
             }
 
             return weather_data
@@ -38,7 +39,7 @@ class Weather_API:
             return None
 
     @staticmethod
-    def get_city_weather_data(city, units='metric', index=0):
+    def get_city_weather_data(city, header, index=0, units='metric'):
         params = {
             'q': city,
             'units': units,
@@ -59,7 +60,8 @@ class Weather_API:
                 'temp': round(data['list'][index]['main']['temp']),
                 'weather': data['list'][index]['weather'][0]['main'],
                 'wind_speed': data['list'][index]['wind']['speed'],
-                'humidity': data['list'][index]['main']['humidity']
+                'humidity': data['list'][index]['main']['humidity'],
+                'header': header,
             }
 
             return weather_data
@@ -69,5 +71,5 @@ class Weather_API:
             return None
 
     def __str__(self):
-        return f'Temperature: {self.temp}°C, Weather: {self.weather}, Wind Speed: {self.wind_speed} m/s, Humidity: {self.humidity}%'
+        return f'Temperature: {self.temp}°C, Weather: {self.weather}, Wind Speed: {self.wind_speed} m/s, Humidity: {self.humidity}%, Header: {self.header}'
 
