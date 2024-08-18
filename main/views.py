@@ -14,14 +14,14 @@ class WeatherView(TemplateView):
 
         if date == 'today' and search_city:
             first_data = w.Weather_API.get_city_weather_data(search_city, index=0, header=f'{current_time.hour}:00')
-            second_data = w.Weather_API.get_city_weather_data(search_city, index=2, header=f'{(current_time.hour + 6) % 24}:00')
-            third_data = w.Weather_API.get_city_weather_data(search_city, index=4, header=f'{(current_time.hour + 12) % 24}:00')
+            second_data = w.Weather_API.get_city_weather_data(search_city, index=1, header=f'{(current_time.hour + 3) % 24}:00')
+            third_data = w.Weather_API.get_city_weather_data(search_city, index=2, header=f'{(current_time.hour + 6) % 24}:00')
             fourth_data = None
             fifth_data = None
         elif date == 'tomorrow' and search_city:
             first_data = w.Weather_API.get_city_weather_data(search_city, index=8, header=f'{(current_time + timedelta(days=1)).hour}:00')
-            second_data = w.Weather_API.get_city_weather_data(search_city, index=10, header=f'{((current_time + timedelta(days=1)).hour + 6) % 24}:00')
-            third_data = w.Weather_API.get_city_weather_data(search_city, index=12, header=f'{((current_time + timedelta(days=1)).hour + 12) % 24}:00')
+            second_data = w.Weather_API.get_city_weather_data(search_city, index=9, header=f'{((current_time + timedelta(days=1)).hour + 3) % 24}:00')
+            third_data = w.Weather_API.get_city_weather_data(search_city, index=10, header=f'{((current_time + timedelta(days=1)).hour + 6) % 24}:00')
             fourth_data = None
             fifth_data = None
         elif date == '5_days' and search_city:
@@ -38,13 +38,18 @@ class WeatherView(TemplateView):
             fifth_data = None
         elif search_city:
             first_data = w.Weather_API.get_city_weather_data(search_city, index=0, header=f'{current_time.hour}:00')
-            second_data = w.Weather_API.get_city_weather_data(search_city, index=2, header=f'{(current_time.hour + 6) % 24}:00')
-            third_data = w.Weather_API.get_city_weather_data(search_city, index=4, header=f'{(current_time.hour + 12) % 24}:00')
+            second_data = w.Weather_API.get_city_weather_data(search_city, index=1, header=f'{(current_time.hour + 3) % 24}:00')
+            third_data = w.Weather_API.get_city_weather_data(search_city, index=2, header=f'{(current_time.hour + 6) % 24}:00')
             fourth_data = None
             fifth_data = None
         else:
             context = super().get_context_data(**kwargs)
             context['error'] = 'Please enter name of the city first'
+            return context
+
+        if first_data == 'City not found' or first_data is None:
+            context = super().get_context_data(**kwargs)
+            context['error'] = 'City not found'
             return context
 
         first = w.Weather_API(**first_data)
@@ -55,10 +60,6 @@ class WeatherView(TemplateView):
             fourth = w.Weather_API(**fourth_data)
             fifth = w.Weather_API(**fifth_data)
 
-        if first_data == 'City not found' or first_data is None:
-            context = super().get_context_data(**kwargs)
-            context['error'] = 'City not found'
-            return context
 
         context = super().get_context_data(**kwargs)
         context['title'] = 'Weather'
