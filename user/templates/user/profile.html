@@ -7,9 +7,9 @@
     {% csrf_token %}
 
     {% if user.photo %}
-    <p><img src="{{ user.photo.url }}"></p>
+        <p><img src="{{ user.photo.url }}"></p>
     {% else %}
-    <p><img src="{{ default_image }}"></p>
+        <p><img src="{{ default_image }}"></p>
     {% endif %}
 
     <div class="form-error">{{ form.non_field_errors }}</div>

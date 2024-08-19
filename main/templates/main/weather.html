@@ -1,15 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
+
+
 {% block content %}
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Погода</title>
+
     <link rel="stylesheet" href="{% static 'deps/weather.css' %}">
-</head>
-<body>
+
+    <title>Погода</title>
+
     <div class="search-container">
         <form id="weather-form" role="search" method="get" action="{% url 'main:search' %}">
             <input type="search" class="form-control me-2" aria-label="Search" name="city" placeholder="Enter city name..." value="{{ request.GET.city }}">
@@ -122,6 +120,4 @@
         </div>
     {% endif %}
 
-</body>
-</html>
 {% endblock %}

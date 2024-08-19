@@ -49,6 +49,7 @@ class UserRegisterForm(UserCreationForm):
             raise forms.ValidationError("Email already registered")
         return email
 
+
 class ProfileUserForm(forms.ModelForm):
     username = forms.CharField(disabled=True, label='Login', widget=forms.TextInput(attrs={'class': 'form-input'}))
     email = forms.CharField(disabled=True, label='E-mail', widget=forms.TextInput(attrs={'class': 'form-input'}))
@@ -56,18 +57,20 @@ class ProfileUserForm(forms.ModelForm):
     date_of_birth = forms.DateField(widget=forms.SelectDateWidget(years=tuple(range(this_year - 100, this_year - 5))))
 
 
-
     class Meta:
         model = get_user_model()
-        fields = ['photo', 'username', 'email', 'date_of_birth', 'first_name', 'last_name']
+        fields = ['photo', 'username', 'email', 'date_of_birth', 'first_name', 'last_name', 'city']
         labels = {
             'first_name': 'Firstname',
             'last_name': 'Lastname',
+            'city': 'City'
         }
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-input'}),
             'last_name': forms.TextInput(attrs={'class': 'form-input'}),
+            'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your city'}),
         }
+
 
 class UserPasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(label='Old password', widget=forms.PasswordInput(attrs={'class': 'form-input'}))

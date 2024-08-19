@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -167,9 +168,8 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 
 AUTH_USER_MODEL = 'user.User'
 
-import os
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_USER_IMAGE = MEDIA_URL + 'user/default.png'
+
