@@ -10,16 +10,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-{% if messages %}
-    <div id="popup-messages">
-        {% for message in messages %}
-            <div class="message-popup {% if message.tags %}{{ message.tags }}{% endif %}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    </div>
-{% endif %}
+<div class="content-wrapper">
+    {% if messages %}
+        <div id="popup-messages">
+            {% for message in messages %}
+                <div class="message-popup {% if message.tags %}{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     <header>
         <div class="container">
@@ -44,12 +44,11 @@
         <!-- Content will be injected here -->
         {% endblock %}
     </main>
+</div>
 
-    <footer>
-        <p>&copy; 2024 Weather Site. All rights reserved.</p>
-    </footer>
-
-
+<footer>
+    <p>&copy; 2024 Weather Site. All rights reserved.</p>
+</footer>
 
 <script src="{% static 'deps/js.js' %}"></script>
 
