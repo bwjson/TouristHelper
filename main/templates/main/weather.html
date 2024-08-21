@@ -4,12 +4,12 @@
 
 {% block content %}
 
-    <link rel="stylesheet" href="{% static 'deps/weather.css' %}">
+    <link rel="stylesheet" href="{% static 'deps/css/weather.css' %}">
 
     <title>Погода</title>
 
     <div class="search-container">
-        <form id="weather-form" role="search" method="get" action="{% url 'main:search' %}">
+        <form id="weather-form" role="search" method="get" action="{% url 'weather:search' %}">
             <input type="search" class="form-control me-2" aria-label="Search" name="city" placeholder="Enter city name..." value="{{ request.GET.city }}">
             <input type="hidden" id="date-input" name="date" value="{{ weather.date }}">
             <button class="search-button" type="submit">Search</button>
@@ -44,11 +44,11 @@
             <div class="weather-box">
                 <div class="temperature">{{ weather.first.header }}</div>
                 {% if weather.first.weather == 'Rain' %}
-                    <img src="{% static "deps/rain.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/rain.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.first.weather == 'Clouds' %}
-                    <img src="{% static "deps/cloud.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/cloud.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.first.weather == 'Clear' %}
-                    <img src="{% static "deps/sunny.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/sunny.png" %}" alt="Weather" class="weather-icon">
                 {% endif %}
                 <div class="temperature">{{ weather.first.temp }}°C</div>
                 <div class="status">{{ weather.first.weather }}</div>
@@ -59,11 +59,11 @@
             <div class="weather-box">
                 <div class="temperature">{{ weather.second.header }}</div>
                 {% if weather.second.weather == 'Rain' %}
-                    <img src="{% static "deps/rain.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/rain.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.second.weather == 'Clouds' %}
-                    <img src="{% static "deps/cloud.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/cloud.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.second.weather == 'Clear' %}
-                    <img src="{% static "deps/sunny.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/sunny.png" %}" alt="Weather" class="weather-icon">
                 {% endif %}
                 <div class="temperature">{{ weather.second.temp }}°C</div>
                 <div class="status">{{ weather.second.weather }}</div>
@@ -74,11 +74,11 @@
             <div class="weather-box">
                 <div class="temperature">{{ weather.third.header }}</div>
                 {% if weather.third.weather == 'Rain' %}
-                    <img src="{% static "deps/rain.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/rain.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.third.weather == 'Clouds' %}
-                    <img src="{% static "deps/cloud.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/cloud.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.third.weather == 'Clear' %}
-                    <img src="{% static "deps/sunny.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/sunny.png" %}" alt="Weather" class="weather-icon">
                 {% endif %}
                 <div class="temperature">{{ weather.third.temp }}°C</div>
                 <div class="status">{{ weather.third.weather }}</div>
@@ -90,11 +90,11 @@
         	<div class="weather-box">
                 <div class="temperature">{{ weather.fourth.header }}</div>
                 {% if weather.fourth.weather == 'Rain' %}
-                    <img src="{% static "deps/rain.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/rain.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.fourth.weather == 'Clouds' %}
-                    <img src="{% static "deps/cloud.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/cloud.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.fourth.weather == 'Clear' %}
-                    <img src="{% static "deps/sunny.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/sunny.png" %}" alt="Weather" class="weather-icon">
                 {% endif %}
                 <div class="temperature">{{ weather.fourth.temp }}°C</div>
                 <div class="status">{{ weather.fourth.weather }}</div>
@@ -105,11 +105,11 @@
             <div class="weather-box">
                 <div class="temperature">{{ weather.fifth.header }}</div>
                 {% if weather.fifth.weather == 'Rain' %}
-                    <img src="{% static "deps/rain.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/rain.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.fifth.weather == 'Clouds' %}
-                    <img src="{% static "deps/cloud.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/cloud.png" %}" alt="Weather" class="weather-icon">
                 {% elif weather.fifth.weather == 'Clear' %}
-                    <img src="{% static "deps/sunny.png" %}" alt="Weather" class="weather-icon">
+                    <img src="{% static "deps/pictures/sunny.png" %}" alt="Weather" class="weather-icon">
                 {% endif %}
                 <div class="temperature">{{ weather.fifth.temp }}°C</div>
                 <div class="status">{{ weather.fifth.weather }}</div>

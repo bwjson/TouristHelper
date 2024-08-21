@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'deps/css/city.css' %}">
+
+<div class="container">
+    <div class="city-list">
+        <div class="city-card">
+            <img src="{% static 'deps/pictures/natele-al-duomo.jpg' %}" alt="New York" class="city-image">
+            <div class="city-info">
+                <h3>New York</h3>
+                <p><strong>Country:</strong> USA</p>
+                <p><strong>Population:</strong> 8,398,748</p>
+                <p><strong>Average Rating:</strong> 4.5</p>
+            </div>
+        </div>
+        <div class="city-card">
+            <img src="{% static 'deps/pictures/natele-al-duomo.jpg' %}" alt="Paris" class="city-image">
+            <div class="city-info">
+                <h3>Paris</h3>
+                <p><strong>Country:</strong> France</p>
+                <p><strong>Population:</strong> 2,140,526</p>
+                <p><strong>Average Rating:</strong> 4.7</p>
+            </div>
+        </div>
+        <div class="city-card">
+            <img src="{% static 'deps/pictures/natele-al-duomo.jpg' %}" alt="Tokyo" class="city-image">
+            <div class="city-info">
+                <h3>Tokyo</h3>
+                <p><strong>Country:</strong> Japan</p>
+                <p><strong>Population:</strong> 9,273,000</p>
+                <p><strong>Average Rating:</strong> 4.6</p>
+            </div>
+        </div>
+        <div class="city-card">
+            <img src="{% static 'deps/pictures/natele-al-duomo.jpg' %}" alt="London" class="city-image">
+            <div class="city-info">
+                <h3>London</h3>
+                <p><strong>Country:</strong> United Kingdom</p>
+                <p><strong>Population:</strong> 8,982,000</p>
+                <p><strong>Average Rating:</strong> 4.8</p>
+            </div>
+        </div>
+        <div class="city-card">
+            <img src="{% static 'deps/pictures/natele-al-duomo.jpg' %}" alt="Rome" class="city-image">
+            <div class="city-info">
+                <h3>Rome</h3>
+                <p><strong>Country:</strong> Italy</p>
+                <p><strong>Population:</strong> 2,837,332</p>
+                <p><strong>Average Rating:</strong> 4.4</p>
+            </div>
+        </div>
+        <div class="city-card">
+            <img src="{% static 'deps/pictures/natele-al-duomo.jpg' %}" alt="Sydney" class="city-image">
+            <div class="city-info">
+                <h3>Sydney</h3>
+                <p><strong>Country:</strong> Australia</p>
+                <p><strong>Population:</strong> 5,312,163</p>
+                <p><strong>Average Rating:</strong> 4.3</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

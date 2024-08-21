@@ -47,6 +47,8 @@ class WeatherView(LoginRequiredMixin, TemplateView):
             fifth_data = None
         else:
             first_data = None
+            second_data = None
+            third_data = None
 
         if first_data == 'City not found' or first_data is None:
             context = super().get_context_data(**kwargs)
@@ -75,3 +77,6 @@ class WeatherView(LoginRequiredMixin, TemplateView):
         return context
 
 
+class HomePage(TemplateView):
+    template_name = 'base.html'
+    extra_context = {'title': 'Home Page'}

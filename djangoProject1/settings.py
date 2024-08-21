@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'main',
     'user',
+    'cities',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,7 @@ WSGI_APPLICATION = 'djangoProject1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'weather',
+        'NAME': 'tourist',
         'USER': 'postgres',
         'PASSWORD': '5432',
         'HOST': 'localhost',
