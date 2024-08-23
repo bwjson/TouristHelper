@@ -9,30 +9,32 @@
     <title>Погода</title>
 
     <div class="search-container">
-        <form id="weather-form" role="search" method="get" action="{% url 'weather:search' %}">
-            <input type="search" class="form-control me-2" aria-label="Search" name="city" placeholder="Enter city name..." value="{{ request.GET.city }}">
-            <input type="hidden" id="date-input" name="date" value="{{ weather.date }}">
-            <button class="search-button" type="submit">Search</button>
-        </form>
-        <div class="date-buttons">
-            <button class="date-button {% if weather.date == 'today' %}active-date-button{% endif %}"
-                    onclick="document.getElementById('date-input').value = 'today'; document.getElementById('weather-form').submit();">
-                Today
-            </button>
-            <button class="date-button {% if weather.date == 'tomorrow' %}active-date-button{% endif %}"
-                    onclick="document.getElementById('date-input').value = 'tomorrow'; document.getElementById('weather-form').submit();">
-                Tomorrow
-            </button>
-            <button class="date-button {% if weather.date == '3_days' %}active-date-button{% endif %}"
-                    onclick="document.getElementById('date-input').value = '3_days'; document.getElementById('weather-form').submit();">
-                3 Days
-            </button>
-            <button class="date-button {% if weather.date == '5_days' %}active-date-button{% endif %}"
-                    onclick="document.getElementById('date-input').value = '5_days'; document.getElementById('weather-form').submit();">
-                5 Days
-            </button>
+        <div class="search-form">
+            <form id="weather-form" role="search" method="get" action="{% url 'weather:search' %}">
+                <input type="search" class="search-input" aria-label="Search" name="city" placeholder="Enter city name..." value="{{ request.GET.city }}">
+                <input type="hidden" id="date-input" name="date" value="{{ weather.date }}">
+                <button class="search-button" type="submit">Search</button>
+            </form>
         </div>
+    <div class="date-buttons">
+        <button class="date-button {% if weather.date == 'today' %}active-date-button{% endif %}"
+                onclick="document.getElementById('date-input').value = 'today'; document.getElementById('weather-form').submit();">
+            Today
+        </button>
+        <button class="date-button {% if weather.date == 'tomorrow' %}active-date-button{% endif %}"
+                onclick="document.getElementById('date-input').value = 'tomorrow'; document.getElementById('weather-form').submit();">
+            Tomorrow
+        </button>
+        <button class="date-button {% if weather.date == '3_days' %}active-date-button{% endif %}"
+                onclick="document.getElementById('date-input').value = '3_days'; document.getElementById('weather-form').submit();">
+            3 Days
+        </button>
+        <button class="date-button {% if weather.date == '5_days' %}active-date-button{% endif %}"
+                onclick="document.getElementById('date-input').value = '5_days'; document.getElementById('weather-form').submit();">
+            5 Days
+        </button>
     </div>
+</div>
 
     {% if error %}
         <div class="error-message">

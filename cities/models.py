@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models import Avg
+from django.shortcuts import get_object_or_404
+
 from user.models import User
 
 
@@ -23,13 +26,15 @@ class City(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name='Description')
     region = models.CharField(max_length=100, blank=False)
     image = models.ImageField(upload_to='cities', blank=True, null=True)
-    population = models.IntegerField(blank=False)
+    population = models.BigIntegerField(blank=False, null=True)
+    average_rating = models.FloatField(default=0)
 
     class Meta:
         db_table = 'city'
         verbose_name = 'city'
         verbose_name_plural = 'cities'
         ordering = ('id',)
+
 
     def update_average_rating(self):
         ratings = self.ratings.all()
@@ -38,6 +43,12 @@ class City(models.Model):
         else:
             self.average_rating = 0
         self.save()
+
+    def get_average_rating(self):
+        return self.ratings.aggregate(Avg('rating'))['rating__avg'] or 0
+
+    def get_total_count(self):
+        return self.ratings.count()
 
     def __str__(self):
         return f'Name: {self.name}, Country: {self.country}'
@@ -49,7 +60,7 @@ class Attraction(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name='Description')
     image = models.ImageField(upload_to='attrs', blank=True, null=True)
     slug = models.SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name='URL')
-    category = models.ForeignKey(to=Category, on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category, related_name='attractions')
 
     class Meta:
         db_table = 'attraction'
@@ -58,7 +69,7 @@ class Attraction(models.Model):
         ordering = ('id',)
 
     def __str__(self):
-        return f'Name: {self.name}, City: {self.city}, Category: {self.category}'
+        return f'Name: {self.name}, City: {self.city}, Categories: {self.categories}'
 
 
 class Rating(models.Model):

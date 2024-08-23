@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'deps/css/city_detail.css' %}">
+
+<div class="city-header">
+    <img src="{{ city.image.url }}" alt="{{ city.image }}">
+    <h1>{{ city.name }}</h1>
+    <p><strong>Country:</strong> {{ city.country }}</p>
+    <p><strong>Population:</strong> {{ city.population }}</p>
+    <p>{{ city.description }}</p>
+</div>
+
+<div class="rating-container">
+    <form id="rating-form" method="post" action="{% url 'cities:rate_city' city.slug %}">
+        {% csrf_token %}
+        <input type="hidden" id="rating-input" name="rating" value="0">
+        <div class="star-rating">
+            <span class="star" data-rating="1">&#9733;</span>
+            <span class="star" data-rating="2">&#9733;</span>
+            <span class="star" data-rating="3">&#9733;</span>
+            <span class="star" data-rating="4">&#9733;</span>
+            <span class="star" data-rating="5">&#9733;</span>
+        </div>
+    </form>
+
+
+    <p>Average rating: {{ average_rating }}</p>
+    <p>Total reviews: {{ total_reviews }}</p>
+</div>
+
+<div class="attractions">
+    {% for attraction in attractions %}
+    <div class="attraction-card">
+        <img src="{{ attraction.image.url }}" alt="{{ attraction.name }}">
+        <h4>{{ attraction.name }}</h4>
+        <p>{{ attraction.description|truncatechars:222 }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
