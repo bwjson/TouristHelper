@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+	<div class="attraction-card">
+        <img src="{{ attraction.image.url }}" alt="{{ attraction.name }}">
+        <h4>{{ attraction.name }}</h4>
+        <p>{{ attraction.description }}</p>
+    </div>
+
+    <form id="review-form" method="post" action="{% url 'cities:review_attr' city.slug attraction.slug %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="review-text">Review</label>
+            <textarea id="review-text" name="text" class="form-control" rows="4" required></textarea>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% for review in reviews %}
+        <p><strong>{{ review.user.username }}</strong> sended:</p>
+        <p>{{ review.text }}</p>
+        <small>Date: {{ review.created_at|date:"d.m.Y H:i" }}</small>
+    {% endfor %}
+
+{% endblock %}

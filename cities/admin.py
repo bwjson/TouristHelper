@@ -1,5 +1,5 @@
 from django.contrib import admin
-from cities.models import Category, City, Attraction, Rating
+from cities.models import Category, City, Attraction, Rating, Review
 
 
 @admin.register(Category)
@@ -18,3 +18,4 @@ class AttractionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Rating)
+admin.site.register(Review)

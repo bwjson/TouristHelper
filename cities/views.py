@@ -1,6 +1,9 @@
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import ListView, View, DetailView
-from .models import City, Attraction, Rating
+from django.urls import reverse_lazy
+from django.views.generic import ListView, View, DetailView, FormView
+
+from .forms import ReviewForm
+from .models import City, Attraction, Rating, Review
 from .utils import query_search
 
 
@@ -29,40 +32,6 @@ class CityListView(ListView):
         return context
 
 
-'''class CityDetailView(ListView):
-    model = Attraction
-    template_name = 'cities/city_detail.html'
-    context_object_name = 'attractions'
-
-    def get_queryset(self):
-        city_slug = self.kwargs['slug']
-        city = City.objects.get(slug=city_slug)
-        attractions = Attraction.objects.filter(city=city)
-        return attractions
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        city = self.get_object()
-        context['title'] = 'City detail'
-        context['city'] = City.objects.get(slug=self.kwargs['slug'])
-        context['average_rating'] = city.get_average_rating()
-        context['total_reviews'] = city.get_total_count()
-        return context
-    
-class CityDetailView(DetailView):
-    model = City
-    template_name = 'cities/city_detail.html'
-    context_object_name = 'city'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        city = self.get_object()  
-        context['attractions'] = Attraction.objects.filter(city=city) 
-        context['title'] = 'City detail'
-        context['average_rating'] = city.get_average_rating() 
-        context['total_reviews'] = city.get_total_count() 
-        return context'''
-
 class CityDetailView(DetailView):
     model = City
     template_name = 'cities/city_detail.html'
@@ -79,6 +48,26 @@ class CityDetailView(DetailView):
         context['title'] = 'City detail'
         context['average_rating'] = city.get_average_rating()
         context['total_reviews'] = city.get_total_count()
+        return context
+
+
+class AttractionDetailView(DetailView):
+    model = Attraction
+    template_name = 'cities/attraction_detail.html'
+    context_object_name = 'attraction'
+
+    def get_object(self, queryset=None):
+        attr_slug = self.kwargs['attr_slug']
+        return get_object_or_404(Attraction, slug=attr_slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        attraction = self.get_object()
+        context['title'] = 'Attraction detail'
+        context['attraction'] = attraction
+        context['city.slug'] = attraction.city.slug
+        context['city'] = attraction.city
+        context['reviews'] = Review.objects.filter(attraction=attraction)
         return context
 
 
@@ -102,3 +91,24 @@ class RateCityView(View):
                 pass
 
         return redirect('cities:detail', slug=city.slug)
+
+
+class ReviewAttrView(FormView):
+    template_name = 'cities/attraction_detail.html'
+    form_class = ReviewForm
+    model = Review
+    success_url = 'cities:attraction_detail'
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.attraction = get_object_or_404(Attraction, slug=self.kwargs['attr_slug'])
+        self.object.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('cities:attr_detail', kwargs={
+            'slug': self.kwargs['city_slug'],
+            'attr_slug': self.kwargs['attr_slug']
+        })
+
+

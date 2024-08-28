@@ -1,6 +1,5 @@
 from django.db import models
 from django.db.models import Avg
-from django.shortcuts import get_object_or_404
 
 from user.models import User
 
@@ -83,3 +82,16 @@ class Rating(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.city.update_average_rating()
+
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    attraction = models.ForeignKey(Attraction, on_delete=models.CASCADE)
+    text = models.TextField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'attraction')
+
+    def __str__(self):
+        return f'{self.user}: {self.attraction}'
