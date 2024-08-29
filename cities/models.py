@@ -38,13 +38,13 @@ class City(models.Model):
     def update_average_rating(self):
         ratings = self.ratings.all()
         if ratings.exists():
-            self.average_rating = ratings.aggregate(models.Avg('rating'))['rating__avg']
+           self.average_rating = ratings.aggregate(models.Avg('rating'))['rating__avg']
         else:
-            self.average_rating = 0
+           self.average_rating = 0
         self.save()
 
     def get_average_rating(self):
-        return self.ratings.aggregate(Avg('rating'))['rating__avg'] or 0
+         return self.ratings.aggregate(Avg('rating'))['rating__avg'] or 0
 
     def get_total_count(self):
         return self.ratings.count()
@@ -82,6 +82,11 @@ class Rating(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.city.update_average_rating()
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        self.city.update_average_rating()
+
 
 
 class Review(models.Model):

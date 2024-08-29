@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
+{% load string_multiplicator %}
 
 {% block content %}
 
@@ -85,7 +86,9 @@
                     </a>
                     <p><strong>Country:</strong> {{ city.country }}</p>
                     <p><strong>Population:</strong> {{ city.population|intcomma }}</p>
-                    <p><strong>Average Rating:</strong> {{ city.average_rating }}</p>
+
+                    <p><strong>Average Rating:</strong> {% filter multiply:city.average_rating %}⭐{% endfilter %}</p>
+
                     <p>{{ city.description }}</p>
                 </div>
             </div>

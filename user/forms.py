@@ -11,7 +11,7 @@ class UserLoginForm(AuthenticationForm):
 
     class Meta:
         model = get_user_model()
-        fields = ('email', 'password')
+        fields = ('email', 'password',)
 
 
 class UserRegisterForm(UserCreationForm):

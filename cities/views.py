@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, View, DetailView, FormView
 
 from .forms import ReviewForm
-from .models import City, Attraction, Rating, Review
+from .models import City, Attraction, Rating, Review, Category
 from .utils import query_search
 
 
@@ -44,7 +44,17 @@ class CityDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         city = self.get_object()
-        context['attractions'] = Attraction.objects.filter(city=city)
+        selected_categories = self.request.GET.getlist('category')
+
+        if selected_categories:
+            context['attractions'] = Attraction.objects.filter(
+                city=city,
+                categories__slug__in=selected_categories
+            ).distinct()
+        else:
+            context['attractions'] = Attraction.objects.filter(city=city)
+
+        context['categories'] = Category.objects.all()
         context['title'] = 'City detail'
         context['average_rating'] = city.get_average_rating()
         context['total_reviews'] = city.get_total_count()

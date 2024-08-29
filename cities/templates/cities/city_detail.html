@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 
@@ -9,7 +10,7 @@
     <img src="{{ city.image.url }}" alt="{{ city.image }}">
     <h1>{{ city.name }}</h1>
     <p><strong>Country:</strong> {{ city.country }}</p>
-    <p><strong>Population:</strong> {{ city.population }}</p>
+    <p><strong>Population:</strong> {{ city.population|intcomma }}</p>
     <p>{{ city.description }}</p>
 </div>
 
@@ -25,10 +26,10 @@
             <span class="star" data-rating="5">&#9733;</span>
         </div>
     </form>
-
     <p>Average rating: {{ average_rating }}</p>
     <p>Total reviews: {{ total_reviews }}</p>
 </div>
+
 
 <div class="dropdown mb-4">
     <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -38,13 +39,13 @@
         <p class="text-white mx-3 mt-3">Sort by categories:</p>
 
         {% for category in categories %}
-        <div class="form-check text-white mx-3">
-            <input class="form-check-input" type="checkbox" name="category" id="{{ category.slug }}" value="{{ category.slug }}"
-                    {% if category.slug in selected_categories %}checked{% endif %}>
-            <label class="form-check-label" for="{{ category.slug }}">
-                {{ category.name }}
-            </label>
-        </div>
+            <div class="form-check text-white mx-3">
+                <input class="form-check-input" type="checkbox" name="category" id="{{ category.slug }}" value="{{ category.slug }}"
+                        {% if category.slug in selected_categories %}checked{% endif %}>
+                <label class="form-check-label" for="{{ category.slug }}">
+                    {{ category.name }}
+                </label>
+            </div>
         {% endfor %}
 
         <button type="submit" class="btn btn-primary mx-3 mt-3">Apply</button>

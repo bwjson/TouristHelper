@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block content %}
+    <link rel="stylesheet" href="{% static 'deps/css/attr_detail.css' %}">
+
 	<div class="attraction-card">
         <img src="{{ attraction.image.url }}" alt="{{ attraction.name }}">
         <h4>{{ attraction.name }}</h4>
@@ -11,16 +13,18 @@
     <form id="review-form" method="post" action="{% url 'cities:review_attr' city.slug attraction.slug %}">
         {% csrf_token %}
         <div class="form-group">
-            <label for="review-text">Review</label>
+            <label for="review-text">Your Review</label>
             <textarea id="review-text" name="text" class="form-control" rows="4" required></textarea>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
     {% for review in reviews %}
-        <p><strong>{{ review.user.username }}</strong> sended:</p>
-        <p>{{ review.text }}</p>
-        <small>Date: {{ review.created_at|date:"d.m.Y H:i" }}</small>
+        <div class="review">
+            <p><strong>{{ review.user.username }}</strong> wrote:</p>
+            <p>{{ review.text }}</p>
+            <small>Date: {{ review.created_at|date:"d.m.Y H:i" }}</small>
+        </div>
     {% endfor %}
 
 {% endblock %}
