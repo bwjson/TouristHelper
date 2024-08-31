@@ -17,7 +17,7 @@ class UserLoginView(LoginView):
     form_class = UserLoginForm
     template_name = 'user/login.html'
     extra_context = {'title': 'Authentication'}
-    success_url = reverse_lazy('main:main')
+    success_url = reverse_lazy('user:profile')
 
     def form_valid(self, form):
         messages.success(self.request, f'Welcome back, {form.get_user().username}!')
@@ -31,7 +31,7 @@ class UserRegisterView(CreateView):
     form_class = UserRegisterForm
     template_name = 'user/registration.html'
     extra_context = {'title': 'Registration'}
-    success_url = reverse_lazy('main:main')
+    success_url = reverse_lazy('user:profile')
 
     def form_valid(self, form):
         response = super().form_valid(form)

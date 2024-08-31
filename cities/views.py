@@ -1,6 +1,8 @@
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, View, DetailView, FormView
+from django.views.generic import ListView, View, DetailView, FormView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import ReviewForm
 from .models import City, Attraction, Rating, Review, Category
@@ -32,7 +34,7 @@ class CityListView(ListView):
         return context
 
 
-class CityDetailView(DetailView):
+class CityDetailView(LoginRequiredMixin, DetailView):
     model = City
     template_name = 'cities/city_detail.html'
     context_object_name = 'city'
@@ -103,7 +105,7 @@ class RateCityView(View):
         return redirect('cities:detail', slug=city.slug)
 
 
-class ReviewAttrView(FormView):
+class AddReviewAttrView(FormView):
     template_name = 'cities/attraction_detail.html'
     form_class = ReviewForm
     model = Review
@@ -121,4 +123,30 @@ class ReviewAttrView(FormView):
             'attr_slug': self.kwargs['attr_slug']
         })
 
-
+class RemoveReviewAttrView(LoginRequiredMixin, DeleteView):
+    model = Review
+    template = 'cities/attraction_detail.html'
+    
+    def get_success_url(self) -> str:
+        return reverse_lazy('cities:attr_detail', kwargs={
+            'slug': self.kwargs['city_slug'],
+            'attr_slug': self.kwargs['attr_slug'],
+        })
+    
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+    
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
+    
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
+		
+    
+    
+	
+	
+    

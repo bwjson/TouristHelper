@@ -9,21 +9,28 @@
         <h4>{{ attraction.name }}</h4>
         <p>{{ attraction.description }}</p>
     </div>
-
-    <form id="review-form" method="post" action="{% url 'cities:review_attr' city.slug attraction.slug %}">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="review-text">Your Review</label>
-            <textarea id="review-text" name="text" class="form-control" rows="4" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+	
+	{% if user.is_authenticated %}
+		<form id="review-form" method="post" action="{% url 'cities:add_review_attr' city.slug attraction.slug %}">
+			{% csrf_token %}
+			<div class="form-group">
+				<label for="review-text">Your Review</label>
+				<textarea id="review-text" name="text" class="form-control" rows="4" required></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	{% else %}
+		<p>Please <a href='{% url "user:login" %}'>login</a> to add review</p>
+	{% endif %}
 
     {% for review in reviews %}
         <div class="review">
             <p><strong>{{ review.user.username }}</strong> wrote:</p>
             <p>{{ review.text }}</p>
             <small>Date: {{ review.created_at|date:"d.m.Y H:i" }}</small>
+			{% if review.user == request.user %}
+				<button class='btn'><a href="{% url 'cities:remove_review_attr' city.slug attraction.slug review.id %}">Delete</a></button>
+			{% endif %}
         </div>
     {% endfor %}
 

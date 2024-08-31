@@ -95,8 +95,5 @@ class Review(models.Model):
     text = models.TextField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        unique_together = ('user', 'attraction')
-
     def __str__(self):
         return f'{self.user}: {self.attraction}'
