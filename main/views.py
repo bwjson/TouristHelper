@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from .utils import weather_api as w
+from main.utils.api_client import APIClient as api
 from datetime import datetime, timedelta
 
 
@@ -22,29 +23,13 @@ class WeatherView(LoginRequiredMixin, TemplateView):
         city = search_city if search_city else profile_city
 
         if date == 'today':
-            first_data = w.Weather_API.get_city_weather_data(city, index=0, header=f'{current_time.hour}:00')
-            second_data = w.Weather_API.get_city_weather_data(city, index=1, header=f'{(current_time.hour + 3) % 24}:00')
-            third_data = w.Weather_API.get_city_weather_data(city, index=2, header=f'{(current_time.hour + 6) % 24}:00')
-            fourth_data = None
-            fifth_data = None
+            first_data, second_data, third_data, fourth_data, fifth_data = api.get_today_data(city, current_time)
         elif date == 'tomorrow':
-            first_data = w.Weather_API.get_city_weather_data(city, index=8, header=f'{(current_time + timedelta(days=1)).hour}:00')
-            second_data = w.Weather_API.get_city_weather_data(city, index=9, header=f'{((current_time + timedelta(days=1)).hour + 3) % 24}:00')
-            third_data = w.Weather_API.get_city_weather_data(city, index=10, header=f'{((current_time + timedelta(days=1)).hour + 6) % 24}:00')
-            fourth_data = None
-            fifth_data = None
+            first_data, second_data, third_data, fourth_data, fifth_data = api.get_tomorrow_data(city, current_time)
         elif date == '5_days':
-            first_data = w.Weather_API.get_city_weather_data(city, index=0, header=f'{current_time.strftime("%b %d")}')
-            second_data = w.Weather_API.get_city_weather_data(city, index=8, header=f'{(current_time + timedelta(days=1)).strftime("%b %d")}')
-            third_data = w.Weather_API.get_city_weather_data(city, index=16, header=f'{(current_time + timedelta(days=2)).strftime("%b %d")}')
-            fourth_data = w.Weather_API.get_city_weather_data(city, index=24, header=f'{(current_time + timedelta(days=3)).strftime("%b %d")}')
-            fifth_data = w.Weather_API.get_city_weather_data(city, index=32, header=f'{(current_time + timedelta(days=4)).strftime("%b %d")}')
+            first_data, second_data, third_data, fourth_data, fifth_data = api.get_3_days_data(city, current_time)
         elif date == '3_days':
-            first_data = w.Weather_API.get_city_weather_data(city, index=0, header=f'{current_time.date().strftime("%b %d")}')
-            second_data = w.Weather_API.get_city_weather_data(city, index=8, header=f'{(current_time + timedelta(days=1)).strftime("%b %d")}')
-            third_data = w.Weather_API.get_city_weather_data(city, index=16, header=f'{(current_time + timedelta(days=2)).strftime("%b %d")}')
-            fourth_data = None
-            fifth_data = None
+            first_data, second_data, third_data, fourth_data, fifth_data = api.get_5_days_data(city, current_time)
         else:
             first_data = None
             second_data = None

@@ -1,5 +1,5 @@
 import requests
-import json
+
 
 API_KEY = '4fb58853c7917f3aa844a78cd28a80aa'
 
@@ -72,6 +72,3 @@ class Weather_API:
 
     def __str__(self):
         return f'Temperature: {self.temp}°C, Weather: {self.weather}, Wind Speed: {self.wind_speed} m/s, Humidity: {self.humidity}%, Header: {self.header}'
-
-# a = Weather_API.get_city_weather_data('Kostanay', header='Kostanay', units='metric')
-# print(a)
