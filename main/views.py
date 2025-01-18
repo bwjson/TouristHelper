@@ -27,9 +27,9 @@ class WeatherView(LoginRequiredMixin, TemplateView):
         elif date == 'tomorrow':
             first_data, second_data, third_data, fourth_data, fifth_data = api.get_tomorrow_data(city, current_time)
         elif date == '5_days':
-            first_data, second_data, third_data, fourth_data, fifth_data = api.get_3_days_data(city, current_time)
-        elif date == '3_days':
             first_data, second_data, third_data, fourth_data, fifth_data = api.get_5_days_data(city, current_time)
+        elif date == '3_days':
+            first_data, second_data, third_data, fourth_data, fifth_data = api.get_3_days_data(city, current_time)
         else:
             first_data = None
             second_data = None
